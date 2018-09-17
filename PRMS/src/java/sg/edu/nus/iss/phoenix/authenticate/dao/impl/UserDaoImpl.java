@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 
 	Connection connection;
 
-// test push
+
 	public UserDaoImpl() {
 		super();
 		// TODO Auto-generated constructor stub
