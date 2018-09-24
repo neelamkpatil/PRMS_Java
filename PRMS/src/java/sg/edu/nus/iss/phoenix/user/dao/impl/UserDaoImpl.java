@@ -117,16 +117,28 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement stmt = null;
 		try {
 			sql = "INSERT INTO user ( id, password, name, "
-					+ "role) VALUES (?, ?, ?, ?) ";
+				+ "role) VALUES (?, ?, ?, ?) ";
+                       // sql = "INSERT INTO user ( id, password, name) "
+			//		+ " VALUES (?, ?, ?) ";
 			stmt = this.connection.prepareStatement(sql);
-
+                        String userRole = "";
+                        for(Role role: valueObject.getRoles()){
+                            if(!userRole.isEmpty()){
+                                userRole+=":";
+                            }
+                            userRole += role.getRole();
+                        }
+                        
+                     
 			stmt.setString(1, valueObject.getId());
 			stmt.setString(2, valueObject.getPassword());
 			stmt.setString(3, valueObject.getName());
-			stmt.setString(4, valueObject.getRoles().get(0).getRole());
+                        stmt.setString(4, userRole);
+			//stmt.setString(4, valueObject.getRoles().get(0).getRole());
+                        System.out.println("create: " + stmt.toString());
 
 			int rowcount = databaseUpdate(stmt);
-			if (rowcount != 1) {
+			if (rowcount != 1)  {
 				// System.out.println("PrimaryKey Error when updating DB!");
 				throw new SQLException("PrimaryKey Error when updating DB!");
 			}
@@ -155,7 +167,16 @@ public class UserDaoImpl implements UserDao {
 			stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, valueObject.getPassword());
 			stmt.setString(2, valueObject.getName());
-			stmt.setString(3, valueObject.getRoles().get(0).getRole());
+                          String userRole = "";
+                          System.out.print(valueObject.getRoles());
+                        for(Role role: valueObject.getRoles()){
+                            if(!userRole.isEmpty()){
+                                userRole+=":";
+                            }
+                            userRole += role.getRole();
+                        }
+			//stmt.setString(3, valueObject.getRoles().get(0).getRole());
+                        stmt.setString(3, userRole);
 
 			stmt.setString(4, valueObject.getId());
 
@@ -413,10 +434,10 @@ public class UserDaoImpl implements UserDao {
 				temp.setPassword(result.getString("password"));
 				temp.setName(result.getString("name"));
 				temp.setRoles(createRoles(result.getString("role")));
-				//Role e = new Role(result.getString("role"));
-				//ArrayList<Role> roles = new ArrayList<Role>();
-				//roles.add(e);
-				//temp.setRoles(roles);
+//				Role e = new Role(result.getString("role"));
+//				ArrayList<Role> roles = new ArrayList<Role>();
+//				roles.add(e);
+//				temp.setRoles(roles);
 
 				searchResults.add(temp);
 			}

@@ -78,9 +78,9 @@ public class UserService {
 
 	}
         
-	public void processCreate(User rp) {
+	public void processCreate(User ur) {
 		try {
-			urdao.create(rp);
+			urdao.create(ur);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

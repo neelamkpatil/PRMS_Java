@@ -149,7 +149,7 @@ public class User implements Cloneable, Serializable {
 		out.append("Persistent attributes: \n");
 		out.append("id = " + this.id + "\n");
 		out.append("password = " + this.password + "\n");
-		out.append("name = " + this.name + "\n");
+		out.append("name = " + this.name + "\n");     
 		out.append("role = " + this.roles.get(0).getRole() + "\n");
 		return out.toString();
 	}
