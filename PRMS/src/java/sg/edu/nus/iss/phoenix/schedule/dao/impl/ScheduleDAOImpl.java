@@ -81,7 +81,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     @Override
     public List<ProgramSlot> loadAll() throws SQLException {
         openConnection();
-        String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` DESC; ";
+        String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` DESC, `startTime` DESC; ";
         List<ProgramSlot> searchResults = listQuery(connection
                 .prepareStatement(sql));
         closeConnection();
@@ -421,37 +421,37 @@ public class ScheduleDAOImpl implements ScheduleDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean checkOverlap(Date date, Time sttime, Time duration) throws SQLException {
-
-        // Incorrect, need to change
-        String sql = "select * \n" +
-                "from `program-slot` \n" +
-                "where dateOfProgram = ? AND\n" +
-                "    ((startTime >= ?  AND startTime < ?) \n" +
-                "    OR (SEC_TO_TIME(TIME_TO_SEC(`startTime`) + TIME_TO_SEC(`duration`)) > ? \n" +
-                "    AND SEC_TO_TIME(TIME_TO_SEC(`startTime`) + TIME_TO_SEC(`duration`)) <= ? ));";
-
+    public boolean checkOverlap(ProgramSlot valueObject) throws SQLException {
+        
+        StringBuilder sql = new StringBuilder(
+                "select `program-name`, `dateOfProgram`, `starttime`, addTime(`startTime`,`duration`) \n" + 
+                     "  from `program-slot`\n" +
+                     "  where (`dateOfProgram` = ? and \n" +
+                     "    ((`startTime` = ? and `duration` = ?)\n" +
+                     "	or (`startTime` < addTime(?, ?) and addTime(`startTime`,`duration`) > ?))) ");
+        if (valueObject.getId() != -1) {
+                sql.append("and `id` != ").append(String.valueOf(valueObject.getId())).append(" ");
+            }
         PreparedStatement stmt = null;
         ResultSet result = null;
-        int allRows = 0;
+        Boolean isOverlap = true;
         openConnection();
         try {
-            stmt = connection.prepareStatement(sql);
-            stmt.setDate(1, date);
-            stmt.setTime(2, sttime);
-            stmt.setTime(3, sttime);
-            stmt.setTime(4, duration);
-            stmt.setTime(5, sttime);
-            stmt.setTime(6, sttime);
-            stmt.setTime(7, duration);
+            stmt = connection.prepareStatement(sql.toString());
+            stmt.setDate(1, valueObject.getDate());
+            stmt.setTime(2, valueObject.getSttime());
+            stmt.setTime(3, valueObject.getDuration());
+            stmt.setTime(4, valueObject.getSttime());
+            stmt.setTime(5, valueObject.getDuration());
+            stmt.setTime(6, valueObject.getSttime());
 
             System.out.print("check overlap:" + stmt.toString());
             result = stmt.executeQuery();
-
-            if (result.next())
-                allRows = result.getInt(1);
-            if (allRows != 0) {
-                return true;
+            
+            if (result.next()) {
+                isOverlap = true;
+            } else {
+                isOverlap = false;
             }
         } finally {
             if (result != null)
@@ -460,7 +460,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
                 stmt.close();
             closeConnection();
         }
-        return false;
+        return isOverlap;
     }
 
 

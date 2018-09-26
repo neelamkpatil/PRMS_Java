@@ -74,24 +74,39 @@ public class ScheduleService {
 
     }
 
-    public void processCreate(ProgramSlot ps) {
+    public boolean processCreate(ProgramSlot ps) {
         try {
-            psdao.create(ps);
+            if (!psdao.checkOverlap(ps)) {
+                System.out.println("Service create " + ps.getRpname() );
+                psdao.create(ps);
+                return true;
+            } else {
+                System.out.println("service create false");
+                return false;
+            }
+           
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return false;
     }
 
-    public void processModify(ProgramSlot ps) {
+    public boolean processModify(ProgramSlot ps) {
 
         try {
             System.out.println(ps.toString());
-            psdao.save(ps);
-
-//            System.out.println(oldPs.toString());
-//            psdao.save(ps, oldPs);
+            
+            if (!psdao.checkOverlap(ps)) {
+                System.out.println("Service update " + ps.getId() );
+                psdao.save(ps);
+                return true;
+            } else {
+                System.out.println("service update false");
+                return false;
+            }
+            
 
         } catch (NotFoundException e) {
             // TODO Auto-generated catch block
@@ -100,13 +115,14 @@ public class ScheduleService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return false;
 
     }
 
     public void processDelete(int id) {
 
         try {
-//            ProgramSlot ps = new ProgramSlot(id);
+
             psdao.delete(id);
         } catch (NotFoundException e) {
             // TODO Auto-generated catch block
@@ -116,33 +132,4 @@ public class ScheduleService {
             e.printStackTrace();
         }
     }
-
-    // Mia: not correct
-    public boolean checkScheduleOverlap(Date date, Time sttime, Time duration) {
-        try {
-            Time etime = (Time) sttime.clone();
-            etime.setTime(sttime.getTime() + duration.getTime() + 8 * 3600 * 1000);
-            System.out.print(etime.toString());
-            
-//            ZoneOffset offset = ZoneOffset.ofHours(+8);
-//            LocalTime utc =
-//                    OffsetTime.of(etime.toLocalTime(), offset).withOffsetSameInstant(ZoneOffset.UTC).toLocalTime();
-//            etime = Time.valueOf(utc);
-
-            System.out.print("sttime: " + sttime.getTime());
-            System.out.print("duration: " + duration.getTime());
-            System.out.print("duration: " + duration.toString());
-
-            System.out.print(etime.toString());
-            return psdao.checkOverlap(date, sttime, duration);
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        return false;
-
-    }
-
 }

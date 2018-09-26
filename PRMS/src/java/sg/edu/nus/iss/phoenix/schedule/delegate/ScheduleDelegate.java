@@ -15,10 +15,6 @@ public class ScheduleDelegate {
 
     }
 
-    public boolean checkScheduleOverlap(Date date, Time sttime, Time duration) {
-        ScheduleService service = new ScheduleService();
-        return service.checkScheduleOverlap(date, sttime, duration);
-    }
 
     public void processCreate(ProgramSlot ps) {
         ScheduleService service = new ScheduleService();
@@ -31,10 +27,6 @@ public class ScheduleDelegate {
 
     }
 
-//    public void processDelete(String rpname, Date date, Time sttime) {
-//        ScheduleService service = new ScheduleService();
-//        service.processDelete(rpname, date, sttime);
-//    }
     public void processDelete(int id) {
         ScheduleService service = new ScheduleService();
         service.processDelete(id);

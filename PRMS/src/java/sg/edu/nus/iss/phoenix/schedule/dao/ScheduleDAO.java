@@ -172,7 +172,7 @@ public interface ScheduleDAO {
      * @return
      * @throws java.sql.SQLException
      */
-    public abstract boolean checkOverlap(Date date, Time sttime, Time duration)
+    public abstract boolean checkOverlap(ProgramSlot valueObject)
             throws SQLException;
 
 }

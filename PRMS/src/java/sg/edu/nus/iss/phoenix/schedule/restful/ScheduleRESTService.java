@@ -20,6 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
@@ -85,14 +87,15 @@ public class ScheduleRESTService {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
 //    public void updateSchedule(ArrayList<ProgramSlot> psArray) {
-    public void updateSchedule(ProgramSlot ps) {    
+    public Response updateSchedule(ProgramSlot ps) {    
 //        service.processModify(psArray.get(0), psArray.get(1));        
-        service.processModify(ps);
+        if (service.processModify(ps)) {
+            return Response.status(Status.OK).build();
+        } else {
+            return Response.status(Status.CONFLICT).build();
+        }
 
     }
-//    public void updateSchedule(ProgramSlot ps, ProgramSlot oldPs) {
-//        service.processModify(ps, oldPs);
-//    }
 
     /**
      * POST method for creating an instance of resource
@@ -101,8 +104,14 @@ public class ScheduleRESTService {
     @PUT
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createSchedule(ProgramSlot ps) {
-        service.processCreate(ps);
+    public Response createSchedule(ProgramSlot ps) {
+        System.out.println("REST create " + ps.getRpname() );
+        
+        if (service.processCreate(ps)) {
+            return Response.status(Status.OK).build();
+        } else {
+            return Response.status(Status.CONFLICT).build();
+        }
     }
 
     /**
