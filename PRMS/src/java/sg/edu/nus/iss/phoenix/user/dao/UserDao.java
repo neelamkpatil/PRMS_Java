@@ -62,6 +62,9 @@ public interface UserDao {
 	 */
 	public abstract List<User> loadAll() throws SQLException;
 
+        
+        
+        public abstract List<User> loadAllByRole() throws SQLException;
 	/**
 	 * create-method. This will create new row in database according to supplied
 	 * valueObject contents. Make sure that values for all NOT NULL columns are

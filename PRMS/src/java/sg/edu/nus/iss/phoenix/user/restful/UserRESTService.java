@@ -8,6 +8,7 @@ package sg.edu.nus.iss.phoenix.user.restful;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.UriInfo;
 import sg.edu.nus.iss.phoenix.user.entity.User;
 import sg.edu.nus.iss.phoenix.user.entity.Users;
 import sg.edu.nus.iss.phoenix.user.restful.UserRESTService;
+import sg.edu.nus.iss.phoenix.user.service.ReviewSelectUserService;
 import sg.edu.nus.iss.phoenix.user.service.UserService;
 
 /**
@@ -59,6 +61,27 @@ public class UserRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Users getAllUsers() {
         ArrayList<User> urlist = service.findAllUR();
+        Users ursList = new Users();
+        ursList.setUrList(new ArrayList<User>());
+        
+        for (int i = 0; i < urlist.size(); i++) {
+            ursList.getUrList().add(
+                new User(urlist.get(i).getId(), 
+                    urlist.get(i).getPassword(),
+                    urlist.get(i).getName(),
+                    urlist.get(i).getRoles()));
+        }
+
+        return ursList;
+    }
+    
+    @GET
+    @Path("/allByRole")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Users getAllUsersByRole() {
+        ReviewSelectUserService reviewUserService=new ReviewSelectUserService();
+        System.out.println("in rest call");
+        List<User> urlist = reviewUserService.reviewSelectUserByRole();
         Users ursList = new Users();
         ursList.setUrList(new ArrayList<User>());
         

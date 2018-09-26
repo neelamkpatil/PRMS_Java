@@ -39,7 +39,18 @@ public class ReviewSelectUserService {
             }
             return data; 
 	}
-
+        
+        public List<User> reviewSelectUserByRole() {
+            List<User> data = null;
+            try {
+                data = urdao.loadAllByRole();
+                System.out.println("listUser:"+data);
+            } catch (SQLException ex) {
+                Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return data; 
+	}
+        
 	public List<User> searchUser(User ur) {
 		List<User> data = null;
 		try {

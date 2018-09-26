@@ -18,6 +18,9 @@ public class ReviewSelectUserDelegate {
 		service = new ReviewSelectUserService();
 	}
 	
+          public List<User> reviewSelectUserByRole() {
+		return service.reviewSelectUserByRole();	
+	}
 	public List<User> reviewSelectUser() {
 		return service.reviewSelectUser();	
 	}

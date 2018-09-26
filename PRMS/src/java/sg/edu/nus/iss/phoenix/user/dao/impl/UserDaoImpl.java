@@ -102,7 +102,15 @@ public class UserDaoImpl implements UserDao {
 
 		return searchResults;
 	}
-
+            
+         @Override
+        public List<User> loadAllByRole() throws SQLException {
+            String sql = "select * from `user`  where role LIKE '%producer%' OR role LIKE '%presenter%'";
+		List<User> searchResults = listQuery(this.connection
+				.prepareStatement(sql));
+                 System.out.println("listU:"+searchResults.toString());
+		return searchResults;
+         }
 	/*
 	 * (non-Javadoc)
 	 * 
