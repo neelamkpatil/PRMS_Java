@@ -86,9 +86,7 @@ public class ScheduleRESTService {
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-//    public void updateSchedule(ArrayList<ProgramSlot> psArray) {
-    public Response updateSchedule(ProgramSlot ps) {    
-//        service.processModify(psArray.get(0), psArray.get(1));        
+    public Response updateSchedule(ProgramSlot ps) {           
         if (service.processModify(ps)) {
             return Response.status(Status.OK).build();
         } else {

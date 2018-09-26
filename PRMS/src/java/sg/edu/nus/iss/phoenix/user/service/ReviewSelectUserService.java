@@ -6,6 +6,7 @@
 package sg.edu.nus.iss.phoenix.user.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,15 +41,17 @@ public class ReviewSelectUserService {
             return data; 
 	}
         
-        public List<User> reviewSelectUserByRole() {
-            List<User> data = null;
-            try {
-                data = urdao.loadAllByRole();
-                System.out.println("listUser:"+data);
-            } catch (SQLException ex) {
-                Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return data; 
+        
+    public ArrayList<User> findURByRole(String role) {
+		ArrayList<User> currentList = new ArrayList<User>();
+		try {
+			currentList = (ArrayList<User>) urdao.loadURByRole(role);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return currentList;
+
 	}
         
 	public List<User> searchUser(User ur) {

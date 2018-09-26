@@ -38,12 +38,15 @@ public class UserRESTService {
     private UriInfo context;
     
     private UserService service;
+	private ReviewSelectUserService reviewSelectUserService;
+
 
     /**
      * Creates a new instance of UserRESTService
      */
     public UserRESTService() {
         service = new UserService();
+		reviewSelectUserService = new ReviewSelectUserService();
     }
 
     /**
@@ -76,12 +79,17 @@ public class UserRESTService {
     }
     
     @GET
-    @Path("/allByRole")
+    @Path("/all/{role}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Users getAllUsersByRole() {
-        ReviewSelectUserService reviewUserService=new ReviewSelectUserService();
-        System.out.println("in rest call");
-        List<User> urlist = reviewUserService.reviewSelectUserByRole();
+    public Users getUsersByRole(@PathParam("role") String role) {
+        String role2 = null;
+        try { 
+            role2 = URLDecoder.decode(role, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+        }
+        
+        ArrayList<User> urlist = reviewSelectUserService.findURByRole(role2);
         Users ursList = new Users();
         ursList.setUrList(new ArrayList<User>());
         

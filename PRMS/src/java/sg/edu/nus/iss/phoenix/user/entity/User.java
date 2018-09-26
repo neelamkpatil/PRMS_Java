@@ -7,8 +7,6 @@ import java.util.ArrayList;
  * User Value Object. This class is value object representing database table
  * user This class is intented to be used together with associated Dao object.
  */
-//test 2
-//hello world
 public class User implements Cloneable, Serializable {
 
 	/**

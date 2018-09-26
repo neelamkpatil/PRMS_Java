@@ -103,12 +103,20 @@ public class UserDaoImpl implements UserDao {
 		return searchResults;
 	}
             
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDao#loadURByRole(java.sql
+	 * .Connection)
+	 */
          @Override
-        public List<User> loadAllByRole() throws SQLException {
-            String sql = "select * from `user`  where role LIKE '%producer%' OR role LIKE '%presenter%'";
+        public List<User> loadURByRole(String role) throws SQLException {
+		String sql = "SELECT * FROM user WHERE role LIKE '%" + role + "%' ORDER BY id ASC; ";
+        System.out.println(sql);
 		List<User> searchResults = listQuery(this.connection
 				.prepareStatement(sql));
-                 System.out.println("listU:"+searchResults.toString());
+
 		return searchResults;
          }
 	/*

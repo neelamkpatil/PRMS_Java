@@ -63,8 +63,17 @@ public interface UserDao {
 	public abstract List<User> loadAll() throws SQLException;
 
         
-        
-        public abstract List<User> loadAllByRole() throws SQLException;
+    /**
+	 * LoadURByRole-method. This will read all contents from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 * 
+     * @return 
+     * @throws java.sql.SQLException
+	 */
+	public abstract List<User> loadURByRole(String role) throws SQLException;
+
 	/**
 	 * create-method. This will create new row in database according to supplied
 	 * valueObject contents. Make sure that values for all NOT NULL columns are
