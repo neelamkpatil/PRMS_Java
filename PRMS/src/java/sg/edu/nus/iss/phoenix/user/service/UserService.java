@@ -37,11 +37,11 @@ public class UserService {
 		return list;
 	}
 
-	public ArrayList<User> findRPByCriteria(User rp) {
+	public ArrayList<User> findURByCriteria(User ur) {
 		ArrayList<User> currentList = new ArrayList<User>();
 
 		try {
-			currentList = (ArrayList<User>) urdao.searchMatching(rp);
+			currentList = (ArrayList<User>) urdao.searchMatching(ur);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,12 +51,11 @@ public class UserService {
 
 	}
 
-	public User findRP(String rpName) {
+	public User findUR(String urId) {
 		User currentur = new User();
-		currentur.setName(rpName);
+
 		try {
-			currentur = ((ArrayList<User>) urdao
-					.searchMatching(currentur)).get(0);
+			currentur = (User) urdao.searchMatching(urId);
 			return currentur;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -114,5 +113,21 @@ public class UserService {
                 e.printStackTrace();
             }
 	}
+
+    public boolean checkIsAssigned(User user) throws SQLException {
+         //To change body of generated methods, choose Tools | Templates.
+        
+        boolean flag=urdao.checkIsAssigned(user);
+        
+        return flag;
+    }
+    
+    public boolean checkIsExist(User user) throws SQLException {
+         //To change body of generated methods, choose Tools | Templates.
+        
+        boolean flag=urdao.checkIsExist(user);
+        
+        return flag;
+    }
     
 }

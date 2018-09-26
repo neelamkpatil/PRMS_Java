@@ -173,4 +173,13 @@ public interface UserDao {
 
 	public abstract User searchMatching(String uid)
 			throws SQLException;
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+        public abstract boolean checkIsAssigned(User user)throws SQLException;
+
+        public abstract boolean checkIsExist(User user)throws SQLException;
 }

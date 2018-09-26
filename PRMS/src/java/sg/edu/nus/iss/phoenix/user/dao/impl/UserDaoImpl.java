@@ -473,7 +473,69 @@ public class UserDaoImpl implements UserDao {
 			roleList.add(new Role(r.trim()));
 		return (roleList);
 	}
+        
+    /**
+     *
+     * @param user
+     * @return
+     * @throws SQLException
+     */
+    
+    public boolean checkIsAssigned(User user) throws SQLException {
+            boolean flag=false;
+            String sql="select * from `program-slot` where `dateOfProgram`>date(now()) and (`presenter`=? or `producer`=?)";
+                    
+           
+            PreparedStatement stmt = null;
+           
+            ResultSet result = null;
+            try {
+			stmt = this.connection.prepareStatement(sql);
+                        stmt.setString(1, user.getId());
+                        stmt.setString(2, user.getId());
+                        System.out.println(stmt);
+			result = stmt.executeQuery();
 
+			if (result.next())
+				flag=true;
+		}  
+            finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+		}
+            return flag;
+        }
+        
+        
+    public boolean checkIsExist(User user) throws SQLException {
+            boolean flag=false;
+            String sql="select * from `user` where `id`= ? ";
+                    
+           
+            PreparedStatement stmt = null;
+           
+            ResultSet result = null;
+            try {
+			stmt = this.connection.prepareStatement(sql);
+                        stmt.setString(1, user.getId());
+                        System.out.println(stmt);
+			result = stmt.executeQuery();
+
+			if (result.next())
+				flag=true;
+		}  
+            finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+		}
+            return flag;
+        }
+        
+        
 	private Connection openConnection() {
 		Connection conn = null;
 		try {

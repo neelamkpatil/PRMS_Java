@@ -7,6 +7,7 @@ package sg.edu.nus.iss.phoenix.user.restful;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -20,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import sg.edu.nus.iss.phoenix.user.entity.User;
 import sg.edu.nus.iss.phoenix.user.entity.Users;
@@ -122,8 +124,17 @@ public class UserRESTService {
     @PUT
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createUser(User ur) {
-        service.processCreate(ur);
+    public Response createUser(User ur) throws SQLException {
+        String name2;
+        boolean flag=true;
+        flag = service.checkIsExist(ur);
+        System.out.println("create user rest " + flag);
+        if(!flag){
+            service.processCreate(ur);
+            return Response.status(Response.Status.OK).build() ;
+        }
+        return Response.status(Response.Status.NO_CONTENT).build() ;
+        
     }
    
     /**
@@ -133,15 +144,24 @@ public class UserRESTService {
     @DELETE
     @Path("/delete/{urname}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteUser(@PathParam("urname") String name) {
+    public Response deleteUser(@PathParam("urname") String name) throws SQLException {
         String name2;
+        boolean flag=true;
         try { 
             name2 = URLDecoder.decode(name, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace(); 
-            return;
+            return Response.status(Response.Status.NOT_FOUND).build() ;
         }
 
-        service.processDelete(name2);
+        User user =service.findUR(name2);
+        flag = service.checkIsAssigned(user);
+        System.out.print("del user rest flag" + flag);
+        if(!flag){
+            System.out.print("del user rest ok");
+            service.processDelete(name2);
+            return Response.status(Response.Status.OK).build() ;
+        }
+        return Response.status(Response.Status.CONFLICT).build() ;
     }
 }
