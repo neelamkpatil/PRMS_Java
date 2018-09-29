@@ -328,7 +328,7 @@ public class UserDaoImpl implements UserDao {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND id = ").append(valueObject.getId()).append(" ");
+			sql.append("AND id = '").append(valueObject.getId()).append("' ");
 		}
 
 		if (valueObject.getPassword() != null) {
@@ -357,7 +357,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		sql.append("ORDER BY id ASC ");
-
+            System.out.println("xxxx:"+sql);  
 		// Prevent accidential full table results.
 		// Use loadAll if all rows must be returned.
 		if (first)
@@ -365,6 +365,7 @@ public class UserDaoImpl implements UserDao {
 		else
 			searchResults = listQuery(this.connection.prepareStatement(sql
 					.toString()));
+                System.out.println("ssss:"+searchResults);
 
 		return searchResults;
 	}
