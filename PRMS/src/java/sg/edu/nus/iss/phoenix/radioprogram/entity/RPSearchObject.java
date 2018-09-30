@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.radioprogram.entity;
 
+// This class is deprecated
 public class RPSearchObject {
 	  private String name;
 	    private String description;

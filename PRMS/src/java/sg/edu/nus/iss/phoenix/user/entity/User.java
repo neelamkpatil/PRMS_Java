@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.phoenix.authenticate.entity;
+package sg.edu.nus.iss.phoenix.user.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,6 +37,18 @@ public class User implements Cloneable, Serializable {
 		this.id = idIn;
 
 	}
+        
+        public User(String idIn,String password,String name,ArrayList<Role> roles) {
+                this.name=name;
+                this.password=password;
+                this.roles=roles;
+		this.id = idIn;
+
+	}
+
+ 
+ 
+
 
 	/**
 	 * Get- and Set-methods for persistent variables. The default behaviour does
@@ -137,7 +149,7 @@ public class User implements Cloneable, Serializable {
 		out.append("Persistent attributes: \n");
 		out.append("id = " + this.id + "\n");
 		out.append("password = " + this.password + "\n");
-		out.append("name = " + this.name + "\n");
+		out.append("name = " + this.name + "\n");     
 		out.append("role = " + this.roles.get(0).getRole() + "\n");
 		return out.toString();
 	}

@@ -1,9 +1,9 @@
-package sg.edu.nus.iss.phoenix.authenticate.dao;
+package sg.edu.nus.iss.phoenix.user.dao;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.user.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
 public interface UserDao {
@@ -61,6 +61,18 @@ public interface UserDao {
      * @throws java.sql.SQLException
 	 */
 	public abstract List<User> loadAll() throws SQLException;
+
+        
+    /**
+	 * LoadURByRole-method. This will read all contents from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 * 
+     * @return 
+     * @throws java.sql.SQLException
+	 */
+	public abstract List<User> loadURByRole(String role) throws SQLException;
 
 	/**
 	 * create-method. This will create new row in database according to supplied
@@ -161,4 +173,13 @@ public interface UserDao {
 
 	public abstract User searchMatching(String uid)
 			throws SQLException;
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+        public abstract boolean checkIsAssigned(User user)throws SQLException;
+
+        public abstract boolean checkIsExist(User user)throws SQLException;
 }
