@@ -81,7 +81,7 @@ public class ScheduleRESTService {
 
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ps  representation for the resource
      */
     @POST
     @Path("/update")
@@ -97,7 +97,7 @@ public class ScheduleRESTService {
 
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ps  representation for the resource
      */
     @PUT
     @Path("/create")
@@ -114,8 +114,8 @@ public class ScheduleRESTService {
 
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
-     * Mia: incorrect, long path
+     * @param id  name of the resource
+     * 
      */
     @DELETE
     @Path("/delete/{id}")

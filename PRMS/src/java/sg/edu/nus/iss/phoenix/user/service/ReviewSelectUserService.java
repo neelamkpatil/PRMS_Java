@@ -16,52 +16,74 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
 import sg.edu.nus.iss.phoenix.user.dao.UserDao;
 import sg.edu.nus.iss.phoenix.user.entity.User;
+
 /**
  *
  * @author wangzuxiu
  */
 public class ReviewSelectUserService {
-        DAOFactoryImpl factory;
-	UserDao urdao;
 
-	public ReviewSelectUserService() {
-		super();
-		// TODO Auto-generated constructor stub
-		factory = new DAOFactoryImpl();
-		urdao = (UserDao) factory.getUserDAO();
-	}
+    DAOFactoryImpl factory;
+    UserDao urdao;
 
-	public List<User> reviewSelectUser() {
-            List<User> data = null;
-            try {
-                data = urdao.loadAll();
-            } catch (SQLException ex) {
-                Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return data; 
-	}
-        
-        
+    /*
+        Constructor for ReviewSelectUserService class.
+        Initializes user dao class.
+     */
+    public ReviewSelectUserService() {
+        super();
+        // TODO Auto-generated constructor stub
+        factory = new DAOFactoryImpl();
+        urdao = (UserDao) factory.getUserDAO();
+    }
+
+    /**
+     * Method to get review select user
+     *
+     * @return ArrayList of users
+     */
+    public List<User> reviewSelectUser() {
+        List<User> data = null;
+        try {
+            data = urdao.loadAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+
+    /**
+     * Method to get user by role
+     *
+     * @param role of the user.
+     * @return ArrayList of users
+     */
     public ArrayList<User> findURByRole(String role) {
-		ArrayList<User> currentList = new ArrayList<User>();
-		try {
-			currentList = (ArrayList<User>) urdao.loadURByRole(role);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return currentList;
+        ArrayList<User> currentList = new ArrayList<User>();
+        try {
+            currentList = (ArrayList<User>) urdao.loadURByRole(role);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return currentList;
 
-	}
-        
-	public List<User> searchUser(User ur) {
-		List<User> data = null;
-		try {
-			data = urdao.searchMatching(ur);
-		} catch (SQLException ex) {
-			Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return data;
-	}
-    
+    }
+
+    /**
+     * Method to search user
+     *
+     * @param ur object.
+     * @return ArrayList of users
+     */
+    public List<User> searchUser(User ur) {
+        List<User> data = null;
+        try {
+            data = urdao.searchMatching(ur);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+
 }

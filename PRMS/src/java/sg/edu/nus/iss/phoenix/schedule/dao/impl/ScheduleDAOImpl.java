@@ -16,8 +16,8 @@ import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
- * RadioProgram Data Access Object (DAO). This class contains all database
- * handling that is needed to permanently store and retrieve RadioProgram object
+ * Schedule Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve Schedule dao object
  * instances.
  */
 public class ScheduleDAOImpl implements ScheduleDAO {
@@ -413,10 +413,9 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     }
 
     /**
-     * Mia: No doc yet
+     * 
      *
-     * @param stmt
-     *            This parameter contains the SQL statement to be excuted.
+     * 
      * @return
      * @throws java.sql.SQLException
      */

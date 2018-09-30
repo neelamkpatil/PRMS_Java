@@ -9,8 +9,7 @@ public class ProgramSlot implements Cloneable, Serializable {
     /**
      * eclipse identifier
      */
-    // private static final long serialVersionUID = -5500218812568593553L;
-
+  
     /**
      * Persistent Instance variables. This data is directly 
      * mapped to the columns of database table.

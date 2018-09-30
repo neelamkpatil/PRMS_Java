@@ -16,52 +16,22 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 public class ScheduleService {
     DAOFactoryImpl factory;
     ScheduleDAO psdao;
-
+    
+    /*
+        Constructor for Schedule Service class.
+        Initializes schedule dao class.
+        */
     public ScheduleService() {
         super();
-        // Sorry. This implementation is wrong. To be fixed. mia what????
         factory = new DAOFactoryImpl();
         psdao = factory.getScheduleDAO();
     }
 
-//    public ArrayList<ProgramSlot> searchSchedules(ProgramSlot psso) {
-//        ArrayList<ProgramSlot> list = new ArrayList<ProgramSlot>();
-//        try {
-//            list = (ArrayList<ProgramSlot>) psdao.searchMatching(psso);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        return list;
-//    }
-
-//    public ArrayList<ProgramSlot> findPSByCriteria(ProgramSlot ps) {
-//        ArrayList<ProgramSlot> currentList = new ArrayList<ProgramSlot>();
-//
-//        try {
-//            currentList = (ArrayList<ProgramSlot>) psdao.searchMatching(ps);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//        return currentList;
-//    }
-
-//    public ProgramSlot findPS(String rpname) {
-//        ProgramSlot currentps = new ProgramSlot();
-//        currentps.setRpname(rpname);
-//        try {
-//            currentps = ((ArrayList<ProgramSlot>) psdao
-//                    .searchMatching(currentps)).get(0);
-//            return currentps;
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        return currentps;
-//    }
-
+    /**
+     * Method to get all program slots
+     *
+     * @return ArrayList of program slots
+     */
     public ArrayList<ProgramSlot> findAllPS() {
         ArrayList<ProgramSlot> currentList = new ArrayList<ProgramSlot>();
         try {
@@ -73,6 +43,11 @@ public class ScheduleService {
         return currentList;
 
     }
+    /**
+     * Method to create program slot
+     * @param ps program slot to create.
+     * @return boolean on success.
+     */
 
     public boolean processCreate(ProgramSlot ps) {
         try {
@@ -92,6 +67,11 @@ public class ScheduleService {
         }
         return false;
     }
+    /**
+     * Method to modify given program slot.
+     * @param ps program slot to modify.
+     * @return boolean true on success.
+     */
 
     public boolean processModify(ProgramSlot ps) {
 
@@ -119,6 +99,11 @@ public class ScheduleService {
 
     }
 
+    /**
+     * Method to delete given program slot.
+     * @param id of program slot to delete.
+     *
+     */
     public void processDelete(int id) {
 
         try {

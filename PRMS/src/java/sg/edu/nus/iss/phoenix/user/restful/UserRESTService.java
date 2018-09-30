@@ -108,7 +108,7 @@ public class UserRESTService {
     
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ur  representation for the resource
      */
     @POST
     @Path("/update")
@@ -119,7 +119,7 @@ public class UserRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ur  representation for the resource
      */
     @PUT
     @Path("/create")
