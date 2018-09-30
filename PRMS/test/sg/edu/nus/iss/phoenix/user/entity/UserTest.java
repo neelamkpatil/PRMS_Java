@@ -19,23 +19,16 @@ import static org.junit.Assert.*;
  */
 public class UserTest {
     
-    public UserTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+   
+    User instance;
     @Before
     public void setUp() {
+        instance=new User();
     }
     
     @After
     public void tearDown() {
+        instance=null;
     }
 
     /**
@@ -71,9 +64,9 @@ public class UserTest {
         ArrayList<Role> roles = new ArrayList();
         Role role = new Role("produce");
         roles.add(role);
-        User instance = new User("testID","password", "name", roles);
-        String result = instance.getPassword();
-        assertEquals(instance.getPassword(), "password");
+        User instance1 = new User("testID","password", "name", roles);
+        String result = instance1.getPassword();
+        assertEquals(instance1.getPassword(), "password");
     }
 
     /**
@@ -83,7 +76,6 @@ public class UserTest {
     public void testSetPassword() {
         System.out.println("setPassword");
         String passwordIn = "password";
-        User instance = new User();
         instance.setPassword(passwordIn);
         assertEquals(instance.getPassword(), passwordIn);
     }
@@ -94,7 +86,6 @@ public class UserTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        User instance = new User();
         String expResult = "test name";
         instance.setName(expResult); 
         assertEquals(expResult, instance.getName());
@@ -150,7 +141,7 @@ public class UserTest {
         String passwordIn = "password";
         String nameIn = "test name";
         String roleIn = "test role";
-        User instance = new User();
+       
         instance.setAll(idIn, passwordIn, nameIn, roleIn);
         assertEquals(instance.getName(), nameIn);
         assertEquals(instance.getId(), idIn);
@@ -166,12 +157,12 @@ public class UserTest {
         System.out.println("hasEqualMapping");
          ArrayList<Role> roleList = new ArrayList<>();
         Role role = new Role("manager");
-        role.setAccessPrivilege("false");
+        role.setAccessPrivilege("manager");
         roleList.add(role);
-        User valueObject = new User("test id","password","name", roleList);
-        User mappedObject = new User("test id","password","name",roleList);
-        boolean expResult = true;
-        boolean result = mappedObject.hasEqualMapping(valueObject);
+        User valueObject = new User("test","password","name", roleList);
+        //User mappedObject = new User("test","password","name",roleList);
+        boolean expResult = false;
+        boolean result = instance.hasEqualMapping(valueObject);
         assertEquals(expResult, result);
     }
 
